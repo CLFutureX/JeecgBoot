@@ -18,6 +18,7 @@ import { registerThirdComp } from '/@/settings/registerThirdComp';
 import { useSso } from '/@/hooks/web/useSso';
 // 注册online模块lib
 import { registerPackages } from '/@/utils/monorepo/registerPackages';
+ 
 
 async function bootstrap() {
   // 创建应用实例

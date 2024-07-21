@@ -25,7 +25,7 @@
       <CollapseContainer title="在线logo示例" class="text-center mb-6 qrcode-demo-item">
         <QrCode
           :value="qrCodeUrl"
-          logo="http://jeecg.com/images/logo.png"
+          
           :options="{
             color: { dark: '#55D187' },
           }"
@@ -36,7 +36,7 @@
         <QrCode
           :value="qrCodeUrl"
           :logo="{
-            src: 'http://jeecg.com/images/logo.png',
+            
             logoSize: 0.2,
             borderSize: 0.05,
             borderRadius: 50,
@@ -66,7 +66,7 @@
 <script lang="ts">
   import { defineComponent, ref, unref } from 'vue';
   import { QrCode, QrCodeActionType } from '/@/components/Qrcode/index';
-  import LogoImg from '/@/assets/images/logo.png';
+  // import LogoImg from '/@/assets/images/logo.png';
   import { CollapseContainer } from '/@/components/Container/index';
   import { PageWrapper } from '/@/components/Page';
 

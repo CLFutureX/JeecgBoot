@@ -1,0 +1,10 @@
+{
+    "statusOptions": [
+      { "value": "1", "text": "未交房" },
+      { "value": "2", "text": "收订" }, 
+      { "value": "3", "text": "安装中" },
+      { "value": "4", "text": "调试" },
+      { "value": "5", "text": "上门培训" },
+      { "value": "6", "text": "未上门已入住" }
+    ]
+  }

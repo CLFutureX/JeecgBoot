@@ -5,12 +5,12 @@
     <div class="aui-logo" v-if="!getIsMobile">
       <div>
         <h3>
-          <img :src="logoImg" alt="jeecg" />
+          <!-- <img :src="logoImg" alt="jeecg" /> -->
         </h3>
       </div>
     </div>
     <div v-else class="aui-phone-logo">
-      <img :src="logoImg" alt="jeecg" />
+      <!-- <img :src="logoImg" alt="jeecg" /> -->
     </div>
     <div v-show="type === 'login'">
       <div class="aui-content">
@@ -18,7 +18,7 @@
           <div class="aui-form">
             <div class="aui-image">
               <div class="aui-image-text">
-                <img :src="adTextImg" />
+                <!-- <img :src="adTextImg" /> -->
               </div>
             </div>
             <div class="aui-formBox">
@@ -162,7 +162,7 @@
   import MiniForgotpad from './MiniForgotpad.vue';
   import MiniRegister from './MiniRegister.vue';
   import MiniCodelogin from './MiniCodelogin.vue';
-  import logoImg from '/@/assets/loginmini/icon/jeecg_logo.png';
+  // import logoImg from '/@/assets/loginmini/icon/jeecg_logo.png';
   import adTextImg from '/@/assets/loginmini/icon/jeecg_ad_text.png';
   import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
   import { useLocaleStore } from '/@/store/modules/locale';
@@ -194,8 +194,7 @@
   //账号登录表单字段
   const formData = reactive<any>({
     inputCode: '',
-    username: 'admin',
-    password: '123456',
+  
   });
   //手机登录表单字段
   const phoneFormData = reactive<any>({

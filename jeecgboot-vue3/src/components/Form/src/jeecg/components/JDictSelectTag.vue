@@ -68,10 +68,12 @@
   export default defineComponent({
     name: 'JDictSelectTag',
     inheritAttrs: false,
+    // 当前父组件需要注册的子组件-需要使用的
     components: { LoadingOutlined },
+    // 该组件可以接收的参数
     props: {
       value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.array]),
-      dictCode: propTypes.string,
+      dictCode: propTypes.string, // 是不是代表可以传人dictCode，就可以从后端统一获取字段数据？
       type: propTypes.string,
       placeholder: propTypes.string,
       stringToNumber: propTypes.bool,
@@ -128,6 +130,7 @@
       watch(
         () => props.value,
         () => {
+          // 为空时，触发change事件
           if (props.value === '') {
             emit('change', '');
             nextTick(() => formItemContext.onFieldChange());
@@ -135,7 +138,7 @@
         }
       );
       //update-end-author:taoyan date:20220404 for: 使用useRuleFormItem定义的value，会有一个问题，如果不是操作设置的值而是代码设置的控件值而不能触发change事件
-
+      // 初始化字典数据，看起来是可以通过dictCode从后端查询数据
       async function initDictData() {
         let { dictCode, stringToNumber } = props;
         //根据字典Code, 初始化字典数组
@@ -187,6 +190,9 @@
       function handleChangeRadio(e) {
         state.value = e?.target?.value ?? e;
         //update-begin---author:wangshuai ---date:20230504  for：【issues/506】JDictSelectTag 组件 type="radio" 没有返回值------------
+        // 发送一个数据更新的事件， 更新state的value, 
+        // 这个通常用于更新父级传递给子级的对象的值，比如父级传入componentProps： label,value
+        // 而这个update:value 就是对该属性进行更新。
         emit('update:value',e?.target?.value ?? e)
         //update-end---author:wangshuai ---date:20230504  for：【issues/506】JDictSelectTag 组件 type="radio" 没有返回值------------
       }

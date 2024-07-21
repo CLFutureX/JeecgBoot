@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" ref="aideWrapRef" class="aide-wrap" @click="handleGo">
+  <div style="display: none;" v-if="visible"  ref="aideWrapRef" class="aide-wrap" @click="handleGo">
     <div class="icon">
       <svg t="1706259688149" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2056" width="17" height="17">
         <path

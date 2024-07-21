@@ -7,7 +7,7 @@ export const darkMode = 'light';
 type Fn = (...arg: any) => any;
 
 type GenerateTheme = 'default' | 'dark';
-
+    
 export interface GenerateColorsParams {
   mixLighten: Fn;
   mixDarken: Fn;

@@ -279,7 +279,8 @@ export const usePermissionStore = defineStore({
 
           routeList = flatMultiLevelRoutes(routeList);
           // update-begin--author:liaozhiyang---date:20240529---for：【TV360X-522】ai助手路由写死在前端
-          routes = [PAGE_NOT_FOUND_ROUTE, ...routeList, ...staticRoutesList];
+          routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];
+          // del staticRoutesList ai助手
           // update-end--author:liaozhiyang---date:20240529---for：【TV360X-522】ai助手路由写死在前端
           break;
       }

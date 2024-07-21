@@ -32,21 +32,21 @@
           target: '_self',
         });
 
-        downloadByUrl({
-          url: 'https://vebn.oss-cn-beijing.aliyuncs.com/Jeecg/logo.png',
-          target: '_self',
-        });
+        // downloadByUrl({
+        //   url: 'https://vebn.oss-cn-beijing.aliyuncs.com/Jeecg/logo.png',
+        //   target: '_self',
+        // });
       }
 
       function handleDownloadByBase64() {
-        downloadByBase64(imgBase64, 'logo.png');
+        // downloadByBase64(imgBase64, 'logo.png');
       }
 
       function handleDownloadByOnlineUrl() {
-        downloadByOnlineUrl(
-          'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5944817f47b8408e9f1442ece49d68ca~tplv-k3u1fbpfcp-watermark.image',
-          'logo.png'
-        );
+        // downloadByOnlineUrl(
+        //   'https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5944817f47b8408e9f1442ece49d68ca~tplv-k3u1fbpfcp-watermark.image',
+        //   'logo.png'
+        // );
       }
       return {
         handleDownloadByUrl,
