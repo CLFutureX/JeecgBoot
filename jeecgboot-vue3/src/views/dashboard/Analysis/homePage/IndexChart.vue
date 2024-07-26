@@ -10,6 +10,7 @@
             <HeadInfo title="今日访问" :iconColor="visitColor" :content="loginfo.todayVisitCount" icon="team"></HeadInfo>
             <HeadInfo title="总访问量" :iconColor="seriesColor" :content="loginfo.totalVisitCount" icon="rise"></HeadInfo>
           </div>
+        <!-- 折线图 表格数据，高，类型， -->
           <LineMulti :chartData="lineMultiData" height="33vh" type="line" :option="{ legend: { top: 'bottom' } }"></LineMulti>
         </a-card>
       </a-col>
@@ -33,6 +34,7 @@
   }, 500);
 
   const loginfo = ref({});
+  // vuex10.7 创建响应式对象
   const lineMultiData = ref([]);
 
   function initLogInfo() {
@@ -58,6 +60,9 @@
   const ipColor = ref();
   const visitColor = ref();
   const seriesColor = ref();
+  /**
+   * watch的immediate设置为true，so 组件第一次被加载时也会被调用。
+   */
   watch(
     () => getThemeColor.value,
     () => {

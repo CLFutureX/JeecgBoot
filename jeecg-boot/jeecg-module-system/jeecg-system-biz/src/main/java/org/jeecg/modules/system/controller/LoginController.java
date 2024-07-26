@@ -87,7 +87,8 @@ public class LoginController {
             return result;
         }
         String lowerCaseCaptcha = captcha.toLowerCase();
-		// 加入密钥作为混淆，避免简单的拼接，被外部利用，用户自定义该密钥即可
+		// 加入密钥作为混淆，避免简单的拼接，被外部利用，用户自定义该密钥即可 加入了checkKey
+		// 所以其实所有的验证码，并不是直接校验，而是还会携带验证码key，验证码+验证码key才是最终的，避免伪造。
         String origin = lowerCaseCaptcha+sysLoginModel.getCheckKey()+jeecgBaseConfig.getSignatureSecret();
 		String realKey = Md5Util.md5Encode(origin, "utf-8");
 		Object checkCode = redisUtil.get(realKey);
@@ -587,7 +588,7 @@ public class LoginController {
 			return result;
 		}
 		
-		//2. 校验用户名或密码是否正确
+		//2. 校验用户名或密码是否正确 - 基于用户名+密码+salt 通过PEB算法加密
 		String userpassword = PasswordUtil.encrypt(username, password, sysUser.getSalt());
 		String syspassword = sysUser.getPassword();
 		if (!syspassword.equals(userpassword)) {
@@ -630,6 +631,7 @@ public class LoginController {
 		String token = JwtUtil.sign(username, syspassword);
 		// 设置超时时间
 		redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
+		// 设置超时时间
 		redisUtil.expire(CommonConstant.PREFIX_USER_TOKEN + token, JwtUtil.EXPIRE_TIME*2 / 1000);
 
 		//token 信息
@@ -719,6 +721,7 @@ public class LoginController {
 	 * 登录失败超出次数5 返回true
 	 * @param username
 	 * @return
+	 * // 未设置过期时间？ *
 	 */
 	private boolean isLoginFailOvertimes(String username){
 		String key = CommonConstant.LOGIN_FAIL + username;
@@ -733,7 +736,7 @@ public class LoginController {
 	}
 
 	/**
-	 * 记录登录失败次数
+	 * 记录登录失败次数，默认为60s。
 	 * @param username
 	 */
 	private void addLoginFailOvertimes(String username){

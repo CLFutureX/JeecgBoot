@@ -5,6 +5,7 @@
     <div class="aui-logo" v-if="!getIsMobile">
       <div>
         <h3>
+          <!-- 登录的logo  如果不是手机，则显示这里。是手机则显示下面的-->
           <!-- <img :src="logoImg" alt="jeecg" /> -->
         </h3>
       </div>
@@ -37,6 +38,7 @@
                       <div class="aui-inputClear">
                         <i class="icon icon-code"></i>
                         <a-form-item>
+                          <!-- 用户名 -->
                           <a-input class="fix-auto-fill" :placeholder="t('sys.login.userName')" v-model:value="formData.username" />
                         </a-form-item>
                       </div>
@@ -91,7 +93,7 @@
                     <a-button :loading="loginLoading" class="aui-link-login" type="primary" @click="loginHandleClick">
                       {{ t('sys.login.loginButton') }}</a-button>
                   </div>
-                  <div class="aui-flex">
+                  <div class="aui-flex"> 
                     <a class="aui-linek-code aui-flex-box" @click="codeHandleClick">{{ t('sys.login.qrSignInFormTitle') }}</a>
                   </div>
                   <div class="aui-flex">
@@ -188,8 +190,9 @@
     checkKey: null,
   });
   const rememberMe = ref<string>('0');
-  //手机号登录还是账号登录
+  //手机号登录还是账号登录  vuex9.2 创建响应式引用，默认是accountLogin，账号登录
   const activeIndex = ref<string>('accountLogin');
+  // vuex9.1 响应式引用，默认是login，当type变化时，引用该type的地方都会随之改变。
   const type = ref<string>('login');
   //账号登录表单字段
   const formData = reactive<any>({
@@ -268,6 +271,7 @@
     }
     try {
       loginLoading.value = true;
+      // vuex9.3 等待用户登录
       const { userInfo } = await userStore.login(
         toRaw({
           password: formData.password,
@@ -277,6 +281,8 @@
           mode: 'none', //不要默认的错误提示
         })
       );
+      // 如果登录成功，会返回用户信息，否则返回null，的呢牢固失败不会处理吗？也不会生成验证码吗？ 
+      // 错误会被全局异常拦截
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
@@ -290,8 +296,11 @@
         description: error.message || t('sys.login.networkExceptionMsg'),
         duration: 3,
       });
+      // vuex9.6 验证失败之后，为什么会处理验证码？
+      // 为了用户下一次的登录呀： 这次登录失败之后，会再次进入登录页面，此时需要新的验证码了
       handleChangeCheckCode();
     } finally {
+      // vuex9.7 登录完成之后，停止登录加载按钮， loginLoading响应式，此时会联动更新引用方- 从而停止加载指标显示 
       loginLoading.value = false;
     }
   }
@@ -405,7 +414,7 @@
   }
 
   /**
-   * 注册
+   * 注册, vuex10.1 点击之后，触发registerHandleClick注册事件，修改type.value，响应式更新Dom
    */
   function registerHandleClick() {
     type.value = 'register';
@@ -415,7 +424,7 @@
   }
 
   /**
-   * 注册
+   * 登录
    */
   function codeHandleClick() {
     type.value = 'codeLogin';

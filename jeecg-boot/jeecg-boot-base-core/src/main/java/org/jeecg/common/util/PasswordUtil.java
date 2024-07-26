@@ -138,6 +138,14 @@ public class PasswordUtil {
 		return new String(passDec);
 	}
 
+	public static void main(String args[]){
+
+		String salt = "RCGTeGiH";
+		String userName = "admin";
+		String password = "bt777admin";
+		System.out.println(encrypt(userName, password, salt));
+	}
+
 	/**
 	 * 将字节数组转换为十六进制字符串
 	 * 

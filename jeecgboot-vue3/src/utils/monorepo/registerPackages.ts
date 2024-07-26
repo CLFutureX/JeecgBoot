@@ -13,7 +13,10 @@ const installOptions = {
   baseImport,
 };
 
-/** 注册模块 */
+/** 注册模块 
+ * 为什么要注册外部模块？
+ * 就类似，注册第三方的组件
+*/
 function use(app: App, pkg) {
   app.use(pkg, installOptions);
   registerDynamicRouter(pkg.getViews);

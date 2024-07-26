@@ -20,15 +20,19 @@ export function useSso() {
       let ticket = getUrlParam('ticket');
       if (!token) {
         if (ticket) {
+          // 校验门票
           await validateCasLogin({
             ticket: ticket,
             service: locationUrl,
           }).then((res) => {
             const userStore = useUserStore();
+            // token缓存
             userStore.setToken(res.token);
+            // 登录之后，完成页面跳转
             return userStore.afterLoginAction(true, {});
           });
         } else {
+          // 校验失败，调整到登录页面？
           window.location.href = globSetting.casBaseUrl + '/login?service=' + encodeURIComponent(locationUrl);
         }
       }

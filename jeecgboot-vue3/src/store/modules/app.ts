@@ -23,6 +23,7 @@ interface AppState {
   messageHrefParams: any
 }
 let timeId: TimeoutHandle;
+// vuex 5 定义用户本地存储
 export const useAppStore = defineStore({
   id: 'app',
   state: (): AppState => ({

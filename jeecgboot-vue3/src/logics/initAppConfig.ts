@@ -27,6 +27,7 @@ export function initAppConfigStore() {
   const localeStore = useLocaleStore();
   const appStore = useAppStore();
   let projCfg: ProjectConfig = Persistent.getLocal(PROJ_CFG_KEY) as ProjectConfig;
+  // 合并当前项目配置和全局配置
   projCfg = deepMerge(projectSetting, projCfg || {});
   const darkMode = appStore.getDarkMode;
   const {
@@ -58,7 +59,7 @@ export function initAppConfigStore() {
     headerBgColor && updateHeaderBgColor(headerBgColor);
     bgColor && updateSidebarBgColor(bgColor);
   }
-  // init store
+  // init store 这里调用了 store中定义的action函数，会更新内部的store对象
   localeStore.initLocale();
 
   setTimeout(() => {

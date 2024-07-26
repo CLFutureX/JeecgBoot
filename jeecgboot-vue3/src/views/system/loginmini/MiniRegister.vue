@@ -103,6 +103,7 @@
   const { notification, createErrorModal, createMessage } = useMessage();
   const emit = defineEmits(['go-back', 'success', 'register']);
   const formRef = ref();
+  // vuex10.2 表格數據
   const formData = reactive<any>({
     username: '',
     mobile: '',
@@ -132,7 +133,7 @@
   }
 
   /**
-   * 获取手机验证码
+   * 获取手机验证码 vuex10.3 点击之后，触发获取验证码
    */
   async function getLoginCode() {
     if (!formData.mobile) {
@@ -197,7 +198,7 @@
   }
 
   /**
-   * 注册账号
+   * 注册账号 vuex10.5 用户点击注册，触发该函数
    */
   async function registerAccount() {
     try {
@@ -211,8 +212,9 @@
       );
       if (resultInfo && resultInfo.data.success) {
         notification.success({
+          message: '',
           description: resultInfo.data.message || t('sys.api.registerMsg'),
-          duration: 3,
+          duration: 3
         });
         emit('success', { username: formData.username, password: formData.password });
         initForm();

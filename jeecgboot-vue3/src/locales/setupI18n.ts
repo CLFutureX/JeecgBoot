@@ -11,11 +11,14 @@ const { fallback, availableLocales } = localeSetting;
 export let i18n: ReturnType<typeof createI18n>;
 
 async function createI18nOptions(): Promise<I18nOptions> {
+  // vuex4.1 获取本地缓存
   const localeStore = useLocaleStoreWithOut();
+  // vuex4.2 调用store提供的方法获取locale数据
   const locale = localeStore.getLocale;
+  // vuex4.3 动态导入对应的语言脚本文件
   const defaultLocal = await import(`./lang/${locale}.ts`);
   const message = defaultLocal.default?.message ?? {};
-
+  // vuex4.4 设置html页面的语言
   setHtmlPageLang(locale);
   setLoadLocalePool((loadLocalePool) => {
     loadLocalePool.push(locale);
@@ -37,6 +40,7 @@ async function createI18nOptions(): Promise<I18nOptions> {
 }
 
 // setup i18n instance with glob
+// vuex4 async 异步方法，const 是不是声明对象或常量都可以？
 export async function setupI18n(app: App) {
   const options = await createI18nOptions();
   i18n = createI18n(options) as I18n;

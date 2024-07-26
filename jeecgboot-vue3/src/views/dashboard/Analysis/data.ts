@@ -6,6 +6,7 @@ export interface GrowCardItem {
   color?: string;
   action?: string;
   footer?: string;
+  type?: number;
 }
 
 export const growCardList: GrowCardItem[] = [
@@ -45,6 +46,7 @@ export const growCardList: GrowCardItem[] = [
 
 export const chartCardList: GrowCardItem[] = [
   {
+    type: 1,
     title: '总销售额',
     icon: 'visit-count|svg',
     total: 126560,
@@ -52,6 +54,7 @@ export const chartCardList: GrowCardItem[] = [
     footer: '日均销售额',
   },
   {
+    type:2,
     title: '订单量',
     icon: 'total-sales|svg',
     value: 1234,
@@ -60,6 +63,7 @@ export const chartCardList: GrowCardItem[] = [
     footer: '日订单量',
   },
   {
+    type: 3,
     title: '支付笔数',
     icon: 'download-count|svg',
     value: 60,
@@ -68,6 +72,7 @@ export const chartCardList: GrowCardItem[] = [
     footer: '转化率',
   },
   {
+    type: 4,
     title: '运营活动效果',
     icon: 'transaction|svg',
     total: 78,

@@ -28,6 +28,9 @@ export const RootRoute: AppRouteRecordRaw = {
   },
 };
 
+/**
+ * 这里LoginRoute 继承了AppRouteRecordRaw ，所以继承了其属性
+ */
 export const LoginRoute: AppRouteRecordRaw = {
   path: '/login',
   name: 'Login',
@@ -65,4 +68,5 @@ export const TokenLoginRoute: AppRouteRecordRaw = {
   },
 };
 // Basic routing without permission
+// 登录路由，基础路由
 export const basicRoutes = [LoginRoute, RootRoute, ...mainOutRoutes, REDIRECT_ROUTE, PAGE_NOT_FOUND_ROUTE, TokenLoginRoute, Oauth2LoginRoute];

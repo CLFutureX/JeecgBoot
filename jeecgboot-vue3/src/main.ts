@@ -21,11 +21,12 @@ import { registerPackages } from '/@/utils/monorepo/registerPackages';
  
 
 async function bootstrap() {
-  // 创建应用实例
+  // 创建应用实例 其实就是一个app实例，
   const app = createApp(App);
-  // 【QQYUN-6329】
+  // 【QQYUN-6329】  app 根实例
   window.appRootInstance = app;
   // 多语言配置,异步情况:语言文件可以从服务器端获得
+  // vuex3 等待语言设置？ 类似java中的阻塞等待机制一样。
   await setupI18n(app);
 
   // 配置存储
@@ -40,7 +41,7 @@ async function bootstrap() {
   // 注册全局组件
   registerGlobComp(app);
 
-  //CAS单点登录
+  //CAS单点登录- 打开了则进行登录，登录成功，则就会跳转到主页
   await useSso().ssoLogin();
 
   // 配置路由
@@ -51,7 +52,7 @@ async function bootstrap() {
 
   // 注册全局指令
   setupGlobDirectives(app);
-
+ 
   // 配置全局错误处理
   setupErrorHandle(app);
 
@@ -67,4 +68,5 @@ async function bootstrap() {
   console.log(" vue3 app 加载完成！")
 }
 
+// vuex2 加载该main.ts脚本
 bootstrap();

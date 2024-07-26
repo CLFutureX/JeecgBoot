@@ -19,7 +19,7 @@ interface LocaleState {
   // myapps - 跳转前路由地址
   appMainPth: string
 }
-
+// 0721 定义存储，id=app-locale, 可不可以理解为beanName
 export const useLocaleStore = defineStore({
   id: 'app-locale',
   state: (): LocaleState => ({
@@ -28,6 +28,7 @@ export const useLocaleStore = defineStore({
     appIndexTheme: '',
     appMainPth: ''
   }),
+  // 可不可以理解为获取内部属性的方法
   getters: {
     getShowPicker(): boolean {
       return !!this.localInfo?.showPicker;
@@ -47,6 +48,7 @@ export const useLocaleStore = defineStore({
       return this.appMainPth;
     },
   },
+  // actions 又是啥呢？
   actions: {
     /**
      * Set up multilingual information and cache

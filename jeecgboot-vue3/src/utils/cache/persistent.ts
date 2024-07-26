@@ -56,6 +56,11 @@ function initPersistentMemory() {
   sessionCache && sessionMemory.resetCache(sessionCache);
 }
 
+/**
+ * 定义的持久化类对象
+ * 基于localKey获取对应的缓存
+ * 设置对应的缓存key
+ */
 export class Persistent {
   static getLocal<T>(key: LocalKeys) {
     //update-begin---author:scott ---date:2022-10-27  for：token过期退出重新登录，online菜单还是提示token过期----------

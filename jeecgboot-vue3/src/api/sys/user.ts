@@ -88,6 +88,7 @@ export function getUserInfo() {
       setAuthCache(TOKEN_KEY, null);
 
       // update-begin-author:sunjianlei date:20230306 for: 修复登录成功后，没有正确重定向的问题
+      // 
       router.push({
         path: PageEnum.BASE_LOGIN,
         query: {

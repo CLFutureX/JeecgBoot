@@ -1,6 +1,8 @@
 package org.jeecg.modules.system.controller;
 
+import com.alipay.api.domain.Sale;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.SymbolConstant;
@@ -9,6 +11,7 @@ import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.util.CommonUtils;
 import org.jeecg.common.util.filter.SsrfFileTypeFilter;
 import org.jeecg.common.util.oConvertUtils;
+import org.jeecg.modules.system.dto.SaleDataInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.util.AntPathMatcher;
@@ -22,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * <p>
@@ -346,6 +351,41 @@ public class CommonController {
         String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
         String bestMatchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         return new AntPathMatcher().extractPathWithinPattern(bestMatchPattern, path);
+    }
+
+    /**
+     * 获取首页的销售数据*
+     */
+    @RequestMapping("/saleDataList")
+    public Result<List<SaleDataInfo>> getSaleDataList(long startTime, long endTime){
+        List<SaleDataInfo> list = new ArrayList<>();
+
+        SaleDataInfo s1 = new SaleDataInfo();
+        s1.setType(1);
+        s1.setValue(BigDecimal.valueOf(1123));
+        s1.setTotal(BigDecimal.valueOf(9873.23));
+
+        SaleDataInfo s2 = new SaleDataInfo();
+        s2.setType(2);
+        s2.setValue(BigDecimal.valueOf(909));
+        s2.setTotal(BigDecimal.valueOf(1233));
+
+        SaleDataInfo s3 = new SaleDataInfo();
+        s3.setType(3);
+        s3.setValue(BigDecimal.valueOf(79));
+        s3.setTotal(BigDecimal.valueOf(5632));
+
+        SaleDataInfo s4 = new SaleDataInfo();
+        s4.setType(4);
+        s4.setTotal(BigDecimal.valueOf(88));
+        list.add(s1);
+        list.add(s2);
+        list.add(s3);
+        list.add(s4);
+
+        return Result.ok(list);
+
+
     }
 
 }

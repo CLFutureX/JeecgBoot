@@ -31,7 +31,7 @@ export function setupRouterGuard(router: Router) {
  */
 function createPageGuard(router: Router) {
   const loadedPageMap = new Map<string, boolean>();
-
+ // 每次路由之前的执行的操作， 这里是注册前置守卫
   router.beforeEach(async (to) => {
     // The page has already been loaded, it will be faster to open it again, you don’t need to do loading and other processing
     to.meta.loaded = !!loadedPageMap.get(to.path);
@@ -40,7 +40,7 @@ function createPageGuard(router: Router) {
 
     return true;
   });
-
+  // 每次路由的后置操作
   router.afterEach((to) => {
     loadedPageMap.set(to.path, true);
   });
@@ -80,6 +80,7 @@ function createPageLoadingGuard(router: Router) {
 
 /**
  * The interface used to close the current page to complete the request when the route is switched
+ * vuex7 前后置通知拦截点设计路由切换时，是否关闭当前页面已发送未响应的请求。
  * @param router
  */
 function createHttpGuard(router: Router) {
@@ -88,6 +89,7 @@ function createHttpGuard(router: Router) {
   if (removeAllHttpPending) {
     axiosCanceler = new AxiosCanceler();
   }
+  // 于是我们在路由切换之前，添加监听： 如果需要则创建AxiosCanceler，并调用removeAllPending方法
   router.beforeEach(async () => {
     // Switching the route will delete the previous request
     axiosCanceler?.removeAllPending();
@@ -96,6 +98,7 @@ function createHttpGuard(router: Router) {
 }
 
 // Routing switch back to the top
+// 路由切换之后，页面滚动回到最上层
 function createScrollGuard(router: Router) {
   const isHash = (href: string) => {
     return /^#/.test(href);
@@ -112,6 +115,7 @@ function createScrollGuard(router: Router) {
 
 /**
  * Used to close the message instance when the route is switched
+ * 路由切换时，是否删除未关闭的message
  * @param router
  */
 export function createMessageGuard(router: Router) {
@@ -130,6 +134,10 @@ export function createMessageGuard(router: Router) {
   });
 }
 
+/**
+ * 是否打开页面的顶部进度条？
+ * @param router 
+ */
 export function createProgressGuard(router: Router) {
   const { getOpenNProgress } = useTransitionSetting();
   router.beforeEach(async (to) => {

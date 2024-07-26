@@ -16,12 +16,14 @@ export function getStorageShortName() {
 
 export function getAppEnvConfig() {
   const ENV_NAME = getConfigFileName(import.meta.env);
-
+// 判断当前启动参数中是否存在DEV环境的配置，存在则取该import.meta.env作为配置
+// 不存在，则为生产环境时，从window中取配置
   const ENV = (import.meta.env.DEV
     ? // Get the global configuration (the configuration will be extracted independently when packaging)
       (import.meta.env as unknown as GlobEnvConfig)
     : window[ENV_NAME as any]) as unknown as GlobEnvConfig;
 
+  // 从不同的环境配置中，获取配置
   const {
     VITE_GLOB_APP_TITLE,
     VITE_GLOB_API_URL,

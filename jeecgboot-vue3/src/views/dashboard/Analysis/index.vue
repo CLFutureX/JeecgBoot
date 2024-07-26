@@ -3,7 +3,7 @@
   <IndexDef v-if="indexStyle === 1"></IndexDef>
   <IndexBdc v-if="indexStyle == 2"></IndexBdc>
   <IndexTask v-if="indexStyle == 3"></IndexTask>
-  <div style="width: 100%; text-align: right; margin-top: 20px">
+  <div v-if="indexStyle != 0" style="width: 100%; text-align: right; margin-top: 20px">
     首页主题：
     <a-radio-group v-model:value="indexStyle">
       <a-radio :value="0">默认</a-radio>

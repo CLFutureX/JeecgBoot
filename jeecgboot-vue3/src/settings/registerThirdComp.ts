@@ -34,8 +34,8 @@ export async function registerThirdComp(app: App) {
   );
   // update-end--author:liaozhiyang---date:20240308---for：【QQYUN-8241】emoji-mart-vue-fast库异步加载
   //---------------------------------------------------------------------
-  // 注册全局dayjs
-  dayjs.locale('zh-cn');
+  // 注册全局dayjs 轻量级日期组件
+  dayjs.locale('zh-cn'); 
   dayjs.extend(relativeTime);
   dayjs.extend(customParseFormat);
   app.config.globalProperties.$dayjs = dayjs

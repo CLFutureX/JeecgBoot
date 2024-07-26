@@ -1,6 +1,7 @@
 <template>
   <div class="md:flex">
-    <template v-for="(item, index) in dataList" :key="item.title">
+    <!-- vuex10.7 总销售额 -->
+    <template v-for="(item, index) in dataList" :key="item.title"> 
       <ChartCard
         :loading="loading"
         :title="item.title"
@@ -14,6 +15,7 @@
           </a-tooltip>
         </template>
         <div v-if="type === 'chart'">
+          <!-- vuex10.7 同日同周比，数据改动 -->
           <Trend term="周同比" :percentage="12" v-if="index === 0" />
           <Trend term="日同比" :percentage="11" v-if="index === 0" :type="false" />
 
@@ -59,6 +61,8 @@
   import SingleLine from '/@/components/chart/SingleLine.vue';
   import { chartCardList, bdcCardList } from '../data';
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
+import { getSaleDataList } from '../api';
+import { getData } from '/@/views/report/chartdemo/chartdemo.data';
 
   const { getThemeColor } = useRootSetting();
   const props = defineProps({
@@ -101,8 +105,36 @@
   const seriesColor = computed(() => {
     return getThemeColor.value;
   })
+  
+  // 一个函数： 基于type选择表单数据 
   const dataList = computed(() => (props.type === 'dbc' ? bdcCardList : chartCardList));
+  const saleDataList = ref([])
 
+  function getDataList() {
+    const startTime = new Date().getUTCMilliseconds(); 
+    let futureTime = new Date();
+    futureTime.setDate(futureTime.getDate() + 7);
+    const endTime = futureTime.getUTCMilliseconds();
+   
+     getSaleDataList( {
+      startTime: startTime,
+      endTime : endTime
+     }).then((res) => {
+      if(res.success) {
+        res.result.forEach(res =>{
+          dataList.value.forEach(element => {
+            if(res.type == element.type){
+              element.total = res.total;
+              element.value = res.value;
+            }
+          });
+        })
+        saleDataList.value = res.result;
+      }
+     })
+  }
+
+  getDataList();
   function getTotal(total, index) {
     return index === 0 ? `￥${total}` : index === 3 ? `${total}%` : total;
   }

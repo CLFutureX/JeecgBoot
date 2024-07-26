@@ -64,6 +64,7 @@ export function usePermission() {
     const tabStore = useMultipleTabStore();
     tabStore.clearCacheTabs();
     resetRouter();
+    console.log("usePermission 构建后台菜单");
     const routes = await permissionStore.buildRoutesAction();
     routes.forEach((route) => {
       router.addRoute(route as unknown as RouteRecordRaw);

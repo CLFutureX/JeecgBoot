@@ -9,8 +9,10 @@ export interface Cache<V = any> {
 }
 
 const NOT_ALIVE = 0;
-
+// vuex6 自己定义的内存对象结构
 export class Memory<T = any, V = any> {
+  // key in keyof T  js中索引签名写法，代表通过T类型的key获取到对应的Cache
+  // 上面我们将Cache定义了对象结构， ={} 初始化一个空对象，类似Map<key,Value>
   private cache: { [key in keyof T]?: Cache<V> } = {};
   private alive: number;
 
@@ -40,7 +42,15 @@ export class Memory<T = any, V = any> {
     return this.cache[key];
   }
 
+  /**
+   * 判断是否存在旧的，存在则
+   * @param key 
+   * @param value 
+   * @param expires 
+   * @returns 
+   */
   set<K extends keyof T>(key: K, value: V, expires?: number) {
+    // let 当前作用域，且可以被修改
     let item = this.get(key);
 
     if (!expires || (expires as number) <= 0) {
@@ -51,15 +61,18 @@ export class Memory<T = any, V = any> {
         clearTimeout(item.timeoutId);
         item.timeoutId = undefined;
       }
+      // 更新value
       item.value = value;
     } else {
+      // 新的键值对，则创建新对象，存入
       item = { value, alive: expires };
       this.cache[key] = item;
     }
-
+    // 没有过期时间，则直接 返回，不用设置过期删除任务
     if (!expires) {
       return value;
     }
+    // 有过期时间，则设置延迟任务进行删除，延迟删除 ，这不就是时间轮的原理
     const now = new Date().getTime();
     item.time = now + this.alive;
     item.timeoutId = setTimeout(
@@ -80,7 +93,7 @@ export class Memory<T = any, V = any> {
       return item.value;
     }
   }
-
+ // vuex5.1 重置cache，重置的应该是有效期时间
   resetCache(cache: { [K in keyof T]: Cache }) {
     Object.keys(cache).forEach((key) => {
       const k = key as any as keyof T;

@@ -48,6 +48,7 @@ export function createPermissionGuard(router: Router) {
       userStore.getUserInfo.homePath !== PageEnum.BASE_HOME
     ) {
       homePathJumpCount++;
+      // 路由切换时，跳转到自定义的首页
       next(userStore.getUserInfo.homePath);
       return;
     }
@@ -190,7 +191,7 @@ export function createPermissionGuard(router: Router) {
       next();
       return;
     }
-
+    console.log('permissionGuard 构建后台菜单路由');
     // 构建后台菜单路由
     const routes = await permissionStore.buildRoutesAction();
     routes.forEach((route) => {
