@@ -2,7 +2,7 @@ import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
 
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '/@/router/routes/basic';
 
-import { mainOutRoutes } from './mainOut';
+//import { mainOutRoutes } from './mainOut';
 import { PageEnum } from '/@/enums/pageEnum';
 import { t } from '/@/hooks/web/useI18n';
 
@@ -69,4 +69,4 @@ export const TokenLoginRoute: AppRouteRecordRaw = {
 };
 // Basic routing without permission
 // 登录路由，基础路由
-export const basicRoutes = [LoginRoute, RootRoute, ...mainOutRoutes, REDIRECT_ROUTE, PAGE_NOT_FOUND_ROUTE, TokenLoginRoute, Oauth2LoginRoute];
+export const basicRoutes = [LoginRoute, RootRoute,  REDIRECT_ROUTE, PAGE_NOT_FOUND_ROUTE, TokenLoginRoute, Oauth2LoginRoute];
